@@ -20,7 +20,7 @@
 
 extern crate alloc;
 
-use alloc::collections::BTreeMap;
+use alloc::{collections::BTreeMap, string::String};
 
 use alloy_primitives::{Address, Bytes, B256, U256};
 use alloy_serde::{
@@ -422,6 +422,10 @@ pub struct ChainConfig {
     /// Clique parameters.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub clique: Option<CliqueConfig>,
+
+    /// Additional fields specific to each chain.
+    #[serde(flatten, default)]
+    pub extra_fields: BTreeMap<String, serde_json::Value>,
 }
 
 impl ChainConfig {
